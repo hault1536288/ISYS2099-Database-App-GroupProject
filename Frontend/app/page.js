@@ -1,11 +1,10 @@
-import Patient from "./patient/page";
-import Staff from "./staff/page";
+import PatientList from "./patient/page";
+import StaffList from "./staff/page";
 
 export default function Home() {
   return (
     <div className="bg-white">
-      <Patient />
-      <Staff />
+      <p>This is homepage</p>
     </div>
   );
 }
