@@ -1,7 +1,10 @@
 import React from "react";
+import Navbar from "../components/homepage/nav-bar";
 
 const Patient = () => {
-  return <div>Patient</div>;
+  return (
+    <div></div>
+  );
 };
 
 export default Patient;
