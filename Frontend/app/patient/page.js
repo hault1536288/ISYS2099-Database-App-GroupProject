@@ -2,21 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import "@/app/globals.css";
+import fetchData from "../hooks/fetchData";
 
-const PatientList = () => {
-  const [patients, setPatients] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+export default function PatientList() {
+  // const { data, error, loading } = fetchData('apiUrl'); // replace with apiUrl
   const [showRegister, setShowRegister] = useState(false);
   const [showTreatment, setShowTreatment] = useState(false);
-  const [newPatient, setNewPatient] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    birthDate: "",
-    allergy: "",
-  });
+  
 
   const patient = [
     {
@@ -84,51 +76,9 @@ const PatientList = () => {
     },
   ];
 
-  // const fetchPatients = async (search = "") => {
-  //   try {
-  //     setLoading(true);
-  //     const res = await fetch(`/api/patients?search=${search}`);
-  //     const data = await res.json();
-  //     setPatients(data.patients);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error("Failed to fetch patients:", error);
-  //     setLoading(false);
-  //   }
-  // };
 
-  // const registerPatient = async () => {
-  //   try {
-  //     const res = await fetch("/api/", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(newPatient),
-  //     });
-
-  //     if (res.ok) {
-  //       setShowRegister(false);
-  //       setNewPatient({
-  //         name: "",
-  //         email: "",
-  //         phone: "",
-  //         address: "",
-  //         birthDate: "",
-  //         allergy: "",
-  //       });
-  //       fetchPatients();
-  //     }
-  //   } catch (error) {
-  //     console.error("Failed to register patient:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchPatients();
-  // }, []);
-
-  if (loading) return <div>Loading...</div>;
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className="container mx-auto p-4">
@@ -140,12 +90,9 @@ const PatientList = () => {
           type="text"
           className="border p-3 w-full"
           placeholder="Search by name or ID"
-          // value={searchTerm}
-          // onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button
           className="ml-2 bg-yellow-500 text-white p-2 rounded"
-          // onClick={() => fetchPatients(searchTerm)}
         >
           Search
         </button>
@@ -174,7 +121,7 @@ const PatientList = () => {
           </tr>
         </thead>
         <tbody>
-          {patient.length > 0 ? (
+          {patient.length > 0 ? (       // replace 'patient' with 'data' when there is apiUrl
             patient.map((patient) => (
               <tr key={patient.id}>
                 <td className="border px-4 py-2">{patient.id}</td>
@@ -214,55 +161,31 @@ const PatientList = () => {
                 type="text"
                 placeholder="Name"
                 className="border p-2 mb-2 w-full"
-                value={newPatient.name}
-                onChange={(e) =>
-                  setNewPatient({ ...newPatient, name: e.target.value })
-                }
               />
               <input
                 type="email"
                 placeholder="Email"
                 className="border p-2 mb-2 w-full"
-                value={newPatient.email}
-                onChange={(e) =>
-                  setNewPatient({ ...newPatient, email: e.target.value })
-                }
               />
               <input
                 type="tel"
                 placeholder="Phone Number"
                 className="border p-2 mb-2 w-full"
-                value={newPatient.phone}
-                onChange={(e) =>
-                  setNewPatient({ ...newPatient, phone: e.target.value })
-                }
               />
               <input
                 type="text"
                 placeholder="Address"
                 className="border p-2 mb-2 w-full"
-                value={newPatient.address}
-                onChange={(e) =>
-                  setNewPatient({ ...newPatient, address: e.target.value })
-                }
               />
               <input
                 type="date"
                 placeholder="Date of Birth"
                 className="border p-2 mb-2 w-full"
-                value={newPatient.birthDate}
-                onChange={(e) =>
-                  setNewPatient({ ...newPatient, birthDate: e.target.value })
-                }
               />
               <input
                 type="text"
                 placeholder="Allergy"
                 className="border p-2 mb-2 w-full"
-                value={newPatient.allergy}
-                onChange={(e) =>
-                  setNewPatient({ ...newPatient, allergy: e.target.value })
-                }
               />
 
               <div className="flex justify-between mt-4">
@@ -315,5 +238,3 @@ const PatientList = () => {
     </div>
   );
 };
-
-export default PatientList;

@@ -1,26 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import "@/app/globals.css";
+import fetchData from "../hooks/fetchData";
 
-export default function Home() {
-  const [staff, setStaff] = useState([]);
-  // const [filters, setFilters] = useState({
-  //   department: "",
-  //   name: "",
-  //   sortOrder: "ASC",
-  // });
+export default function StaffList() {
+  // const { data, error, loading } = fetchData('apiUrl'); // replace with apiUrl
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [showSchedule, setShowSchedule] = useState(false);
-  const [newStaff, setNewStaff] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    birthDate: "",
-    jobTitle: "",
-    salary: "",
-  });
+
 
   const staffs = [
     {
@@ -90,48 +78,9 @@ export default function Home() {
       salary: "10000$",
     },
   ];
-    // const registerStaff = async () => {
-  //   try {
-  //     const res = await fetch("/api/", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(newStaff),
-  //     });
 
-  //     if (res.ok) {
-  //       setShowRegisterForm(false);
-  //       setNewStaff({
-  //         name: "",
-  //         email: "",
-  //         phone: "",
-  //         address: "",
-  //         birthDate: "",
-  //         jobTitle: "",
-  //         salary: "",
-  //       });
-  //       fetchStaffs();
-  //     }
-  //   } catch (error) {
-  //     console.error("Failed to register Staff:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   async function fetchStaff() {
-  //     const res = await fetch(
-  //       `/api/staff?department=${filters.department}&name=${filters.name}&sortOrder=${filters.sortOrder}`
-  //     );
-  //     const data = await res.json();
-  //     setStaff(data.staff);
-  //   }
-  //   fetchStaff();
-  // }, [filters]);
-
-
-
-
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className="container mx-auto p-4">
@@ -142,14 +91,8 @@ export default function Home() {
           type="text"
           placeholder="Filter by Name"
           className="border p-2 rounded"
-          // value={filters.name}
-          // onChange={(e) => setFilters({ ...filters, name: e.target.value })}
         />
         <select
-          // value={filters.department}
-          // onChange={(e) =>
-          //   setFilters({ ...filters, department: e.target.value })
-          // }
           className="border p-2 rounded"
         >
           <option value="">All Departments</option>
@@ -158,10 +101,6 @@ export default function Home() {
           <option value="3">3</option>
         </select>
         <select
-          // value={filters.sortOrder}
-          // onChange={(e) =>
-          //   setFilters({ ...filters, sortOrder: e.target.value })
-          // }
           className="border p-2 rounded"
         >
           <option value="ASC">Ascending</option>
@@ -192,7 +131,7 @@ export default function Home() {
           </tr>
         </thead>
         <tbody>
-          {staffs.length > 0 ? (
+          {staffs.length > 0 ? (         // replace 'staffs' with 'data' when there is apiUrl
             staffs.map((staff) => (
               <tr key={staff.id}>
                 <td className="border px-4 py-2">{staff.id}</td>
@@ -240,64 +179,36 @@ export default function Home() {
                 type="text"
                 placeholder="Name"
                 className="border p-2 mb-2 w-full"
-                value={newStaff.name}
-                onChange={(e) =>
-                  setNewStaff({ ...newStaff, name: e.target.value })
-                }
               />
               <input
                 type="email"
                 placeholder="Email"
                 className="border p-2 mb-2 w-full"
-                value={newStaff.email}
-                onChange={(e) =>
-                  setNewStaff({ ...newStaff, email: e.target.value })
-                }
               />
               <input
                 type="tel"
                 placeholder="Phone Number"
                 className="border p-2 mb-2 w-full"
-                value={newStaff.phone}
-                onChange={(e) =>
-                  setNewStaff({ ...newStaff, phone: e.target.value })
-                }
               />
               <input
                 type="text"
                 placeholder="Address"
                 className="border p-2 mb-2 w-full"
-                value={newStaff.address}
-                onChange={(e) =>
-                  setNewStaff({ ...newStaff, address: e.target.value })
-                }
               />
               <input
                 type="date"
                 placeholder="Date of Birth"
                 className="border p-2 mb-2 w-full"
-                value={newStaff.birthDate}
-                onChange={(e) =>
-                  setNewStaff({ ...newStaff, birthDate: e.target.value })
-                }
               />
               <input
                 type="text"
                 placeholder="Job Title"
                 className="border p-2 mb-2 w-full"
-                value={newStaff.jobTitle}
-                onChange={(e) =>
-                  setNewStaff({ ...newStaff, jobTitle: e.target.value })
-                }
               />
               <input
                 type="text"
                 placeholder="Salary"
                 className="border p-2 mb-2 w-full"
-                value={newStaff.salary}
-                onChange={(e) =>
-                  setNewStaff({ ...newStaff, salary: e.target.value })
-                }
               />
 
               <div className="flex justify-between mt-4">
@@ -328,64 +239,36 @@ export default function Home() {
                 type="text"
                 placeholder="Name"
                 className="border p-2 mb-2 w-full"
-                // value={newStaff.name}
-                // onChange={(e) =>
-                //   setNewStaff({ ...newStaff, name: e.target.value })
-                // }
               />
               <input
                 type="email"
                 placeholder="Email"
                 className="border p-2 mb-2 w-full"
-                // value={newStaff.email}
-                // onChange={(e) =>
-                //   setNewStaff({ ...newStaff, email: e.target.value })
-                // }
               />
               <input
                 type="tel"
                 placeholder="Phone Number"
                 className="border p-2 mb-2 w-full"
-                // value={newStaff.phone}
-                // onChange={(e) =>
-                //   setNewStaff({ ...newStaff, phone: e.target.value })
-                // }
               />
               <input
                 type="text"
                 placeholder="Address"
                 className="border p-2 mb-2 w-full"
-                // value={newStaff.address}
-                // onChange={(e) =>
-                //   setNewStaff({ ...newStaff, address: e.target.value })
-                // }
               />
               <input
                 type="date"
                 placeholder="Date of Birth"
                 className="border p-2 mb-2 w-full"
-                // value={newStaff.birthDate}
-                // onChange={(e) =>
-                //   setNewStaff({ ...newStaff, birthDate: e.target.value })
-                // }
               />
               <input
                 type="text"
                 placeholder="Job Title"
                 className="border p-2 mb-2 w-full"
-                // value={newStaff.jobTitle}
-                // onChange={(e) =>
-                //   setNewStaff({ ...newStaff, allergy: e.target.value })
-                // }
               />
               <input
                 type="text"
                 placeholder="Salary"
                 className="border p-2 mb-2 w-full"
-                // value={newStaff.salary}
-                // onChange={(e) =>
-                //   setNewStaff({ ...newStaff, allergy: e.target.value })
-                // }
               />
 
               <div className="flex justify-between mt-4">
