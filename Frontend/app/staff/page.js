@@ -79,6 +79,33 @@ export default function StaffList() {
     },
   ];
 
+  const staffSchedule = [
+    {
+      id: 1,
+      day: "Mon",
+      startTime: "08:30:00",
+      endTime: "10:00:00",
+    },
+    {
+      id: 2,
+      day: "Mon",
+      startTime: "08:30:00",
+      endTime: "10:00:00",
+    },
+    {
+      id: 3,
+      day: "Mon",
+      startTime: "08:30:00",
+      endTime: "10:00:00",
+    },
+    {
+      id: 4,
+      day: "Mon",
+      startTime: "08:30:00",
+      endTime: "10:00:00",
+    },
+  ];
+
   // if (loading) return <div>Loading...</div>;
   // if (error) return <p>Error: {error.message}</p>;
 
@@ -286,6 +313,39 @@ export default function StaffList() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+      {showSchedule && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-96">
+            <h2 className="text-xl font-bold mb-4">Staff Schedule</h2>
+
+            <table className="min-w-full table-auto mb-4">
+              <thead className="bg-gray-200">
+                <tr>
+                  <th className="px-4 py-2 text-left">Day</th>
+                  <th className="px-4 py-2 text-left">Start Time</th>
+                  <th className="px-4 py-2 text-left">End Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {staffSchedule.map((schedule) => (
+                  <tr key={schedule.id}>
+                    <td className="border px-4 py-2">{schedule.day}</td>
+                    <td className="border px-4 py-2">{schedule.startTime}</td>
+                    <td className="border px-4 py-2">{schedule.endTime}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <button
+              className="bg-red-600 text-white px-4 py-2 rounded w-full"
+              onClick={() => setShowSchedule(false)}
+            >
+              Close
+            </button>
           </div>
         </div>
       )}
