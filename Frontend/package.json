@@ -10,14 +10,17 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "dotenv": "^16.4.5",
+    "mysql2": "^3.11.0",
     "next": "^14.2.8",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "14.2.8",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1"
+    "postcss": "^8.4.45",
+    "tailwindcss": "^3.4.10"
   }
 }

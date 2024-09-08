@@ -1,11 +1,12 @@
-import Patient from "./patient/page";
-import Staff from "./staff/page";
+import Navbar from "./components/homepage/nav-bar";
+import PatientList from "./patient/page";
+import StaffList from "./staff/page";
 
 export default function Home() {
   return (
     <div className="bg-white">
-      <Patient />
-      <Staff />
+      
+      <p>This is homepage</p>
     </div>
   );
 }
