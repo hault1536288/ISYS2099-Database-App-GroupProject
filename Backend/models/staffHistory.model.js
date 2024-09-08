@@ -1,35 +1,38 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../config/mysql_database')
+const Staff = require('./staff.model')
 
-const Patient = sequelize.define('tb_patient', {
-  patientID: {
+const StaffHistory = sequelize.define('tb_staffHistory', {
+  historyID: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
     primaryKey: true,
+    autoIncrement: true,
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
+  staffID: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'tb_staff',
+      key: 'staffID',
+    },
   },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  phone: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  address: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  birthDate: {
+  changedDate: {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  allergy: {
+  attributeName: {
     type: DataTypes.STRING,
+    allowNull: false,
+  },
+  oldValue: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  newValue: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  changedByStaffID: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   createdAt: {
@@ -42,4 +45,6 @@ const Patient = sequelize.define('tb_patient', {
   },
 })
 
-module.exports = Patient
+StaffHistory.belongsTo(Staff, { foreignKey: 'staffID' })
+
+module.exports = StaffHistory
