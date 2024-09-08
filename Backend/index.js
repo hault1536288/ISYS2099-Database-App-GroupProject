@@ -13,8 +13,22 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 // Routes
-const patientRoutes = require('./routes/patient.routes')
-app.use('/api', patientRoutes)
+const patientRoutes = require('./routes/patient.route')
+const staffRoutes = require('./routes/staff.route')
+const appointmentRoutes = require('./routes/appointment.route')
+const treatmentRoutes = require('./routes/treatment.route')
+const departmentRoutes = require('./routes/department.route')
+const scheduleRoutes = require('./routes/schedule.route')
+const staffHistoryRoutes = require('./routes/staffHistory.route')
+
+// Use the routes
+app.use('/api/staffHistory', staffHistoryRoutes)
+app.use('/api/schedule', scheduleRoutes)
+app.use('/api/appointment', appointmentRoutes)
+app.use('/api/treatment', treatmentRoutes)
+app.use('/api/department', departmentRoutes)
+app.use('/api/patient', patientRoutes)
+app.use('/api/staff', staffRoutes)
 
 // Listen to a specified port
 app.listen(3000, () => {
@@ -37,7 +51,10 @@ app.listen(3000, () => {
 // MongoDB Connection
 async function connectToMongoDB() {
   try {
-    await mongoose.connect(process.env.MONGO_DB_URI)
+    await mongoose.connect('mongodb://localhost:27017/test', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
     console.log('MongoDB Connection Established!')
   } catch (err) {
     console.error('Failed to connect to MongoDB:', err)
