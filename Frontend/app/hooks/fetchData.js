@@ -1,5 +1,4 @@
-// hooks/useFetchData.js
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const fetchData = (url) => {
   const [data, setData] = useState(null);
@@ -7,19 +6,24 @@ const fetchData = (url) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchDataAsync = async () => {
       try {
         const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
         const result = await response.json();
         setData(result);
       } catch (err) {
-        setError(err);
+        setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    if (url) {
+      fetchDataAsync();
+    }
   }, [url]);
 
   return { data, error, loading };

@@ -110,7 +110,7 @@ export default function StaffList() {
   // if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container-fluid mx-auto p-4">
       <h1 className="text-5xl font-bold mb-4">Staff Management</h1>
 
       <div className="flex space-x-4 mb-4">

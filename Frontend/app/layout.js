@@ -1,6 +1,6 @@
 import Navbar from "./components/homepage/nav-bar";
 import "./globals.css";
-import Navbar from "./components/nav-bar";
+
 
 export const metadata = {
   title: "Hospital Management App",
