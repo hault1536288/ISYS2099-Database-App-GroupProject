@@ -56,7 +56,7 @@ const Staff = sequelize.define('tb_staff', {
   },
 })
 
-Staff.belongsTo(Department, { foreignKey: 'departmentID' })
-Department.hasMany(Staff, { foreignKey: 'departmentID' })
+Staff.hasOne(Department, { foreignKey: 'departmentID' })
+Department.hasMany(Staff, { foreignKey: 'staffID' })
 
 module.exports = Staff
