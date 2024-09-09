@@ -11,7 +11,7 @@ sequelize
   .catch((err) => console.log('Unable to create tables: ', err))
 
 // Get all schedules
-router.get('/getSchedule', async (req, res) => {
+router.get('/getSchedules', async (req, res) => {
   try {
     const schedule = await Schedule.findAll()
     res.json(schedule)
@@ -53,6 +53,33 @@ router.post('/addSchedule', async (req, res) => {
       endTime: req.body.endTime,
     })
     res.json(schedule)
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
+// Update a schedule
+router.put('/updateSchedule/:id', async (req, res) => {
+  try {
+    const schedule = await Schedule.findByPk(req.params.id)
+    schedule.staffID = req.body.staffID
+    schedule.departmentID = req.body.departmentID
+    schedule.day = req.body.day
+    schedule.startTime = req.body.startTime
+    schedule.endTime = req.body.endTime
+    await schedule.save()
+    res.json(schedule)
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
+// Delete a schedule
+router.delete('/deleteSchedule/:id', async (req, res) => {
+  try {
+    const schedule = await Schedule.findByPk(req.params.id)
+    await schedule.destroy()
+    res.json({ message: 'Schedule deleted successfully' })
   } catch (err) {
     res.json({ message: err })
   }

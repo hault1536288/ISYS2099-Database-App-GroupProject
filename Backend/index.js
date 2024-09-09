@@ -31,7 +31,7 @@ app.use('/api/patient', patientRoutes)
 app.use('/api/staff', staffRoutes)
 
 // Listen to a specified port
-app.listen(3000, () => {
+app.listen(3030, () => {
   console.log(`Server started at ${port}`)
 })
 
@@ -51,10 +51,7 @@ app.listen(3000, () => {
 // MongoDB Connection
 async function connectToMongoDB() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/test', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
+    await mongoose.connect('mongodb://localhost:27017/test')
     console.log('MongoDB Connection Established!')
   } catch (err) {
     console.error('Failed to connect to MongoDB:', err)

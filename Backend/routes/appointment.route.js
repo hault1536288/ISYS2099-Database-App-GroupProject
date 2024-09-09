@@ -45,4 +45,30 @@ router.post('/addAppointment', async (req, res) => {
   }
 })
 
+// Update an appointment
+router.put('/updateAppointment/:id', async (req, res) => {
+  try {
+    const appointment = await Appointment.findByPk(req.params.id)
+    appointment.patientID = req.body.patientID
+    appointment.staffID = req.body.staffID
+    appointment.startTime = req.body.startTime
+    appointment.endTime = req.body.endTime
+    await appointment.save()
+    res.json(appointment)
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
+// Delete an appointment
+router.delete('/deleteAppointment/:id', async (req, res) => {
+  try {
+    const appointment = await Appointment.findByPk(req.params.id)
+    await appointment.destroy()
+    res.json({ message: 'Appointment deleted successfully' })
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
 module.exports = router

@@ -37,6 +37,6 @@ const Schedule = sequelize.define('tb_schedule', {
   },
 })
 
-Schedule.belongsTo(Staff, { foreignKey: 'staffID' })
+Schedule.hasOne(Staff, { foreignKey: 'staffID' })
 
 module.exports = Schedule

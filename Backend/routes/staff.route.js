@@ -60,4 +60,35 @@ router.post('/addStaff', async (req, res) => {
   }
 })
 
+// Update a staff
+router.put('/updateStaff/:id', async (req, res) => {
+  try {
+    const staff = await Staff.findByPk(req.params.id)
+    staff.departmentID = req.body.departmentID
+    staff.groupManagerID = req.body.groupManagerID
+    staff.name = req.body.name
+    staff.email = req.body.email
+    staff.phone = req.body.phone
+    staff.address = req.body.address
+    staff.birthDate = req.body.birthDate
+    staff.jobTitle = req.body.jobTitle
+    staff.salary = req.body.salary
+    await staff.save()
+    res.json(staff)
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
+// Delete a staff
+router.delete('/deleteStaff/:id', async (req, res) => {
+  try {
+    const staff = await Staff.findByPk(req.params.id)
+    await staff.destroy()
+    res.json({ message: 'Staff deleted successfully' })
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
 module.exports = router

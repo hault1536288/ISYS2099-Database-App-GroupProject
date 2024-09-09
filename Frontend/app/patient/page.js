@@ -3,12 +3,12 @@
 import React, { useState, useEffect } from "react";
 import "@/app/globals.css";
 import fetchData from "../hooks/fetchData";
+import Input from "../components/input";
 
 export default function PatientList() {
   // const { data, error, loading } = fetchData('apiUrl'); // replace with apiUrl
   const [showRegister, setShowRegister] = useState(false);
   const [showTreatment, setShowTreatment] = useState(false);
-  
 
   const patient = [
     {
@@ -76,7 +76,6 @@ export default function PatientList() {
     },
   ];
 
-
   // if (loading) return <div>Loading...</div>;
   // if (error) return <p>Error: {error.message}</p>;
 
@@ -91,9 +90,7 @@ export default function PatientList() {
           className="border p-3 w-full"
           placeholder="Search by name or ID"
         />
-        <button
-          className="ml-2 bg-yellow-500 text-white p-2 rounded"
-        >
+        <button className="ml-2 bg-yellow-500 text-white p-2 rounded">
           Search
         </button>
       </div>
@@ -121,7 +118,7 @@ export default function PatientList() {
           </tr>
         </thead>
         <tbody>
-          {patient.length > 0 ? (       // replace 'patient' with 'data' when there is apiUrl
+          {patient.length > 0 ? ( // replace 'patient' with 'data' when there is apiUrl
             patient.map((patient) => (
               <tr key={patient.id}>
                 <td className="border px-4 py-2">{patient.id}</td>
@@ -218,9 +215,7 @@ export default function PatientList() {
                 className="h-20 pl-2 text-left placeholder-top-left border rounded"
               />
               <div className="flex justify-between mt-4">
-                <button
-                  className="bg-blue-500 text-white p-2 rounded"
-                >
+                <button className="bg-blue-500 text-white p-2 rounded">
                   Add
                 </button>
                 <button
@@ -237,4 +232,4 @@ export default function PatientList() {
       )}
     </div>
   );
-};
+}

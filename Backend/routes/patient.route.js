@@ -57,4 +57,32 @@ router.post('/addPatient', async (req, res) => {
   }
 })
 
+// Update a patient
+router.put('/updatePatient/:id', async (req, res) => {
+  try {
+    const patient = await Patient.findByPk(req.params.id)
+    patient.name = req.body.name
+    patient.email = req.body.email
+    patient.phone = req.body.phone
+    patient.address = req.body.address
+    patient.birthDate = req.body.birthDate
+    patient.allergy = req.body.allergy
+    await patient.save()
+    res.json(patient)
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
+// Delete a patient
+router.delete('/deletePatient/:id', async (req, res) => {
+  try {
+    const patient = await Patient.findByPk(req.params.id)
+    await patient.destroy()
+    res.json({ message: 'Patient deleted successfully' })
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
 module.exports = router

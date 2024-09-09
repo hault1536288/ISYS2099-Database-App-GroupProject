@@ -1,31 +1,61 @@
-'use client'
-import React, { useState, useEffect } from 'react';
+"use client";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 
 export default function Appointment() {
-  const [appointmentDate, setAppointmentDate] = useState('');
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
+  const [appointmentDate, setAppointmentDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [doctors, setDoctors] = useState([]); // Mocked data will go here
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [appointmentID, setAppointmentID] = useState(null);
 
   // Mock function to simulate fetching data (no actual API call)
-  const handleCheckSchedule = () => {
+  const handleCheckSchedule = async () => {
     if (!appointmentDate || !startTime || !endTime) {
-      alert('Please select date, start time, and end time');
+      alert("Please select date, start time, and end time");
       return;
+    }
+
+    try {
+      await axios.post("http://localhost:3000/api/appointment/addAppointment", {
+        startDate: createdAt,
+        endDate: updatedAt,
+        endTime: endTime,
+      });
+    } catch (error) {
+      console.log(error);
     }
 
     // Simulate doctor data being fetched
     const mockDoctors = [
-      { id: 1, name: 'Dr. Smith', specialty: 'Cardiology', scheduleStart: '09:00', scheduleEnd: '17:00' },
-      { id: 2, name: 'Dr. Johnson', specialty: 'Dermatology', scheduleStart: '10:00', scheduleEnd: '16:00' },
-      { id: 3, name: 'Dr. Williams', specialty: 'Pediatrics', scheduleStart: '08:00', scheduleEnd: '15:00' }
+      {
+        id: 1,
+        name: "Dr. Smith",
+        specialty: "Cardiology",
+        scheduleStart: "09:00",
+        scheduleEnd: "17:00",
+      },
+      {
+        id: 2,
+        name: "Dr. Johnson",
+        specialty: "Dermatology",
+        scheduleStart: "10:00",
+        scheduleEnd: "16:00",
+      },
+      {
+        id: 3,
+        name: "Dr. Williams",
+        specialty: "Pediatrics",
+        scheduleStart: "08:00",
+        scheduleEnd: "15:00",
+      },
     ];
 
     // Filtering doctors based on their schedule and chosen time
     const availableDoctors = mockDoctors.filter(
-      (doctor) => startTime >= doctor.scheduleStart && endTime <= doctor.scheduleEnd
+      (doctor) =>
+        startTime >= doctor.scheduleStart && endTime <= doctor.scheduleEnd
     );
 
     setDoctors(availableDoctors); // Update state with the filtered doctors
@@ -55,10 +85,14 @@ export default function Appointment() {
         <>
           {/* Step 1: Select Date and Time */}
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">Choose Date & Time Range</h2>
+            <h2 className="text-xl font-semibold mb-4">
+              Choose Date & Time Range
+            </h2>
 
             {/* Appointment Date */}
-            <label className="block font-medium text-gray-700 mb-1">Appointment Date</label>
+            <label className="block font-medium text-gray-700 mb-1">
+              Appointment Date
+            </label>
             <input
               type="date"
               value={appointmentDate}
@@ -67,7 +101,9 @@ export default function Appointment() {
             />
 
             {/* Start Time */}
-            <label className="block font-medium text-gray-700 mb-1">Start Time</label>
+            <label className="block font-medium text-gray-700 mb-1">
+              Start Time
+            </label>
             <input
               type="time"
               value={startTime}
@@ -76,7 +112,9 @@ export default function Appointment() {
             />
 
             {/* End Time */}
-            <label className="block font-medium text-gray-700 mb-1">End Time</label>
+            <label className="block font-medium text-gray-700 mb-1">
+              End Time
+            </label>
             <input
               type="time"
               value={endTime}
@@ -97,10 +135,20 @@ export default function Appointment() {
             <div>
               <h2 className="text-xl font-semibold mb-4">Available Doctors</h2>
               {doctors.map((doctor) => (
-                <div key={doctor.id} className="bg-white shadow-md p-4 mb-4 rounded-lg">
-                  <p><strong>Name:</strong> Dr. {doctor.name}</p>
-                  <p><strong>Specialty:</strong> {doctor.specialty}</p>
-                  <p><strong>Schedule:</strong> {doctor.scheduleStart} - {doctor.scheduleEnd}</p>
+                <div
+                  key={doctor.id}
+                  className="bg-white shadow-md p-4 mb-4 rounded-lg"
+                >
+                  <p>
+                    <strong>Name:</strong> Dr. {doctor.name}
+                  </p>
+                  <p>
+                    <strong>Specialty:</strong> {doctor.specialty}
+                  </p>
+                  <p>
+                    <strong>Schedule:</strong> {doctor.scheduleStart} -{" "}
+                    {doctor.scheduleEnd}
+                  </p>
                   <button
                     className="mt-2 bg-green-500 text-white py-2 px-4 rounded-md"
                     onClick={() => handleBookAppointment(doctor.id)}
@@ -118,11 +166,21 @@ export default function Appointment() {
         /* Step 3: Show Appointment Details */
         <div className="bg-white shadow-md p-4 mb-4 rounded-lg">
           <h2 className="text-xl font-semibold">Appointment Details</h2>
-          <p><strong>Doctor:</strong> Dr. {selectedDoctor.name}</p>
-          <p><strong>Specialty:</strong> {selectedDoctor.specialty}</p>
-          <p><strong>Appointment Date:</strong> {appointmentDate}</p>
-          <p><strong>Start Time:</strong> {startTime}</p>
-          <p><strong>End Time:</strong> {endTime}</p>
+          <p>
+            <strong>Doctor:</strong> Dr. {selectedDoctor.name}
+          </p>
+          <p>
+            <strong>Specialty:</strong> {selectedDoctor.specialty}
+          </p>
+          <p>
+            <strong>Appointment Date:</strong> {appointmentDate}
+          </p>
+          <p>
+            <strong>Start Time:</strong> {startTime}
+          </p>
+          <p>
+            <strong>End Time:</strong> {endTime}
+          </p>
 
           {/* Cancel Appointment */}
           <button

@@ -45,4 +45,30 @@ router.post('/addStaffHistory', async (req, res) => {
   }
 })
 
+// Update a staffHistory
+router.put('/updateStaffHistory/:id', async (req, res) => {
+  try {
+    const staffHistory = await StaffHistory.findByPk(req.params.id)
+    staffHistory.staffID = req.body.staffID
+    staffHistory.departmentID = req.body.departmentID
+    staffHistory.startDate = req.body.startDate
+    staffHistory.endDate = req.body.endDate
+    await staffHistory.save()
+    res.json(staffHistory)
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
+// Delete a staffHistory
+router.delete('/deleteStaffHistory/:id', async (req, res) => {
+  try {
+    const staffHistory = await StaffHistory.findByPk(req.params.id)
+    await staffHistory.destroy()
+    res.json({ message: 'StaffHistory deleted!' })
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
 module.exports = router

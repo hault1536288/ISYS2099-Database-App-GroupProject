@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../config/mysql_database')
 const Department = require('./department.model')
+const Appointment = require('./appointment.model')
+const Schedule = require('./schedule.model')
 
 const Staff = sequelize.define('tb_staff', {
   staffID: {
@@ -13,6 +15,13 @@ const Staff = sequelize.define('tb_staff', {
     references: {
       model: 'tb_department',
       key: 'departmentID',
+    },
+  },
+  appoinmentID: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'tb_appointment',
+      key: 'appointmentID',
     },
   },
   groupManagerID: {
@@ -56,7 +65,9 @@ const Staff = sequelize.define('tb_staff', {
   },
 })
 
+Staff.hasOne(Appointment, { foreignKey: 'appoinmentID' })
 Staff.hasOne(Department, { foreignKey: 'departmentID' })
+Staff.hasMany(Schedule, { foreignKey: 'staffID' })
 Department.hasMany(Staff, { foreignKey: 'staffID' })
 
 module.exports = Staff

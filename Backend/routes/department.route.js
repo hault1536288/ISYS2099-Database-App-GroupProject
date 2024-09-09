@@ -44,4 +44,29 @@ router.post('/addDepartment', async (req, res) => {
   }
 })
 
+// Update a department
+router.put('/updateDepartment/:id', async (req, res) => {
+  try {
+    const department = await Department.findByPk(req.params.id)
+    department.managerID = req.body.managerID
+    department.name = req.body.name
+    department.description = req.body.description
+    await department.save()
+    res.json(department)
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
+// Delete a department
+router.delete('/deleteDepartment/:id', async (req, res) => {
+  try {
+    const department = await Department.findByPk(req.params.id)
+    await department.destroy()
+    res.json({ message: 'Department deleted!' })
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
 module.exports = router

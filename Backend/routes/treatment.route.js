@@ -43,4 +43,28 @@ router.post('/addTreatment', async (req, res) => {
   }
 })
 
+// Update a treatment
+router.put('/updateTreatment/:id', async (req, res) => {
+  try {
+    const treatment = await Treatment.findByPk(req.params.id)
+    treatment.patientID = req.body.patientID
+    treatment.staffID = req.body.staffID
+    await treatment.save()
+    res.json(treatment)
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
+// Delete a treatment
+router.delete('/deleteTreatment/:id', async (req, res) => {
+  try {
+    const treatment = await Treatment.findByPk(req.params.id)
+    await treatment.destroy()
+    res.json('Treatment deleted')
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
 module.exports = router
