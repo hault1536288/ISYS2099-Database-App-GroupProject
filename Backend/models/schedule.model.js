@@ -18,15 +18,15 @@ const Schedule = sequelize.define(
       },
     },
     dayOfWeek: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     startTime: {
-      type: DataTypes.DATE,
+      type: DataTypes.TIME,
       allowNull: false,
     },
     endTime: {
-      type: DataTypes.DATE,
+      type: DataTypes.TIME,
       allowNull: false,
     },
   },
