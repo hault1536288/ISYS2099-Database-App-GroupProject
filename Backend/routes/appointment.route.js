@@ -2,6 +2,11 @@ const express = require('express')
 const Appointment = require('../models/appointment.model')
 const sequelize = require('../config/mysql_database')
 const router = express.Router()
+const Patient = require('../models/patient.model')
+const Staff = require('../models/staff.model')
+
+Appointment.belongsTo(Patient, { foreignKey: 'patientID' })
+Appointment.belongsTo(Staff, { foreignKey: 'staffID' })
 
 sequelize
   .sync({ force: true })

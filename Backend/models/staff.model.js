@@ -3,6 +3,8 @@ const sequelize = require('../config/mysql_database')
 const Department = require('./department.model')
 const Appointment = require('./appointment.model')
 const Schedule = require('./schedule.model')
+const Treatment = require('./treatment.model')
+const StaffHistory = require('./staffHistory.model')
 
 const Staff = sequelize.define('tb_staff', {
   staffID: {
@@ -13,15 +15,36 @@ const Staff = sequelize.define('tb_staff', {
   departmentID: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'tb_department',
+      model: Department,
       key: 'departmentID',
     },
   },
   appoinmentID: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'tb_appointment',
+      model: Appointment,
       key: 'appointmentID',
+    },
+  },
+  treatmentID: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Treatment,
+      key: 'treatmentID',
+    },
+  },
+  scheduleID: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Schedule,
+      key: 'scheduleID',
+    },
+  },
+  historyID: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: StaffHistory,
+      key: 'historyID',
     },
   },
   groupManagerID: {
@@ -64,10 +87,5 @@ const Staff = sequelize.define('tb_staff', {
     defaultValue: DataTypes.NOW,
   },
 })
-
-Staff.hasOne(Appointment, { foreignKey: 'appoinmentID' })
-Staff.hasOne(Department, { foreignKey: 'departmentID' })
-Staff.hasMany(Schedule, { foreignKey: 'staffID' })
-Department.hasMany(Staff, { foreignKey: 'staffID' })
 
 module.exports = Staff

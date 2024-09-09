@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../config/mysql_database')
 const Patient = require('./patient.model')
+const Staff = require('./staff.model')
 
 const Treatment = sequelize.define('tb_treatment', {
   treatmentID: {
@@ -11,15 +12,14 @@ const Treatment = sequelize.define('tb_treatment', {
   patientID: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'tb_patient',
+      model: Patient,
       key: 'patientID',
     },
   },
   staffID: {
     type: DataTypes.INTEGER,
-    foreignKey: true,
     references: {
-      model: 'staff',
+      model: Staff,
       key: 'staffID',
     },
   },
@@ -32,7 +32,5 @@ const Treatment = sequelize.define('tb_treatment', {
     defaultValue: DataTypes.NOW,
   },
 })
-
-Treatment.belongsTo(Patient, { foreignKey: 'patientID' })
 
 module.exports = Treatment

@@ -12,14 +12,14 @@ const Appointment = sequelize.define('tb_appointment', {
   patientID: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'tb_patient',
+      model: Patient,
       key: 'patientID',
     },
   },
   staffID: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'tb_staff',
+      model: Staff,
       key: 'staffID',
     },
   },
@@ -40,10 +40,5 @@ const Appointment = sequelize.define('tb_appointment', {
     defaultValue: DataTypes.NOW,
   },
 })
-
-Appointment.belongsTo(Patient, { foreignKey: 'patientID' })
-Appointment.belongsTo(Staff, { foreignKey: 'staffID' })
-Patient.hasMany(Appointment, { foreignKey: 'patientID' })
-Staff.hasMany(Appointment, { foreignKey: 'staffID' })
 
 module.exports = Appointment

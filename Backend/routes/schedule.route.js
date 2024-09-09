@@ -1,7 +1,10 @@
 const express = require('express')
 const Schedule = require('../models/schedule.model')
 const sequelize = require('../config/mysql_database')
+const Staff = require('../models/staff.model')
 const router = express.Router()
+
+Schedule.belongsTo(Staff, { foreignKey: 'staffID' })
 
 sequelize
   .sync({ force: true })

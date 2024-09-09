@@ -1,7 +1,18 @@
 const express = require('express')
 const Staff = require('../models/staff.model')
 const sequelize = require('../config/mysql_database')
+const Appointment = require('../models/appointment.model')
+const Treatment = require('../models/treatment.model')
+const Department = require('../models/department.model')
+const StaffHistory = require('../models/staffHistory.model')
+const Schedule = require('../models/schedule.model')
 const router = express.Router()
+
+Staff.hasOne(Appointment, { foreignKey: 'staffID' })
+Staff.hasOne(Treatment, { foreignKey: 'staffID' })
+Staff.hasOne(Department, { foreignKey: 'staffID' })
+Staff.hasOne(StaffHistory, { foreignKey: 'staffID' })
+Staff.hasOne(Schedule, { foreignKey: 'staffID' })
 
 sequelize
   .sync({ force: true })

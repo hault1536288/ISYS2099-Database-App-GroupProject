@@ -11,7 +11,7 @@ const StaffHistory = sequelize.define('tb_staffHistory', {
   staffID: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'tb_staff',
+      model: Staff,
       key: 'staffID',
     },
   },
@@ -44,7 +44,5 @@ const StaffHistory = sequelize.define('tb_staffHistory', {
     defaultValue: DataTypes.NOW,
   },
 })
-
-StaffHistory.belongsTo(Staff, { foreignKey: 'staffID' })
 
 module.exports = StaffHistory

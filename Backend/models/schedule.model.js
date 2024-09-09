@@ -11,7 +11,7 @@ const Schedule = sequelize.define('tb_schedule', {
   staffID: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'tb_staff',
+      model: Staff,
       key: 'staffID',
     },
   },
@@ -36,7 +36,5 @@ const Schedule = sequelize.define('tb_schedule', {
     defaultValue: DataTypes.NOW,
   },
 })
-
-Schedule.hasOne(Staff, { foreignKey: 'staffID' })
 
 module.exports = Schedule
