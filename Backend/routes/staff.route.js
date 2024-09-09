@@ -11,7 +11,7 @@ sequelize
   .catch((err) => console.log('Unable to create tables: ', err))
 
 // Get all staff
-router.get('/getStaff', async (req, res) => {
+router.get('/getStaffs', async (req, res) => {
   try {
     const staff = await Staff.findAll()
     res.json(staff)
