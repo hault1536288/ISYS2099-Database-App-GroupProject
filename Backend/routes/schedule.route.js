@@ -45,6 +45,8 @@ router.get('/getScheduleByStaff/:staffID', async (req, res) => {
   }
 })
 
+// Get a schedule by staff
+
 // Create a new schedule
 router.post('/addSchedule', async (req, res) => {
   try {

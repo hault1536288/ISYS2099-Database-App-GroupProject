@@ -1,61 +1,61 @@
 // Patient API
-http://localhost:3000/api/patient/getPatients
-http://localhost:3000/api/patient/getPatient/:id
-http://localhost:3000/api/patient/getPatientByName/:name
-http://localhost:3000/api/patient/addPatient
-http://localhost:3000/api/patient/updatePatient/:id
-http://localhost:3000/api/patient/deletePatient/:id
+http://localhost:3030/api/patient/getPatients
+http://localhost:3030/api/patient/getPatient/:id
+http://localhost:3030/api/patient/getPatientByName/:name
+http://localhost:3030/api/patient/addPatient
+http://localhost:3030/api/patient/updatePatient/:id
+http://localhost:3030/api/patient/deletePatient/:id
 
 // Staff
-http://localhost:3000/api/staff/getStaffs
-http://localhost:3000/api/staff/getStaff/:id
-http://localhost:3000/api/staff/getStaffByName/:name
-http://localhost:3000/api/staff/addStaff
-http://localhost:3000/api/staff/updateStaff/:id
-http://localhost:3000/api/staff/deleteStaff/:id
+http://localhost:3030/api/staff/getStaffs
+http://localhost:3030/api/staff/getStaff/:id
+http://localhost:3030/api/staff/getStaffByName/:name
+http://localhost:3030/api/staff/addStaff
+http://localhost:3030/api/staff/updateStaff/:id
+http://localhost:3030/api/staff/deleteStaff/:id
 
 // Schedule
-http://localhost:3000/api/schedule/getSchedules
-http://localhost:3000/api/schedule/getSchedule/:id
-http://localhost:3000/api/schedule/getScheduleByStaff/:staffID
-http://localhost:3000/api/schedule/addSchedule
-http://localhost:3000/api/schedule/updateSchedule/:id
-http://localhost:3000/api/schedule/deleteSchedule/:id
-http://localhost:3000/api/schedule/
+http://localhost:3030/api/schedule/getSchedules
+http://localhost:3030/api/schedule/getSchedule/:id
+http://localhost:3030/api/schedule/getScheduleByStaff/:staffID
+http://localhost:3030/api/schedule/addSchedule
+http://localhost:3030/api/schedule/updateSchedule/:id
+http://localhost:3030/api/schedule/deleteSchedule/:id
+http://localhost:3030/api/schedule/
 
 // Appoinment
-http://localhost:3000/api/appoinment/getAppointments
-http://localhost:3000/api/appoinment/getAppointment/:id
-http://localhost:3000/api/appoinment/addAppointment
-http://localhost:3000/api/appoinment/updateAppointment/:id
-http://localhost:3000/api/appoinment/deleteAppointment/:id
-http://localhost:3000/api/appoinment/
-http://localhost:3000/api/appoinment/
-http://localhost:3000/api/appoinment/
+http://localhost:3030/api/appoinment/getAppointments
+http://localhost:3030/api/appoinment/getAppointment/:id
+http://localhost:3030/api/appoinment/addAppointment
+http://localhost:3030/api/appoinment/updateAppointment/:id
+http://localhost:3030/api/appoinment/deleteAppointment/:id
+http://localhost:3030/api/appoinment/
+http://localhost:3030/api/appoinment/
+http://localhost:3030/api/appoinment/
 
 // Department
-http://localhost:3000/api/department/getDepartments
-http://localhost:3000/api/department/getDepartment/:id
-http://localhost:3000/api/department/addDepartment
-http://localhost:3000/api/department/updateDepartment/:id
-http://localhost:3000/api/department/deleteDepartment/:id
-http://localhost:3000/api/department/
+http://localhost:3030/api/department/getDepartments
+http://localhost:3030/api/department/getDepartment/:id
+http://localhost:3030/api/department/addDepartment
+http://localhost:3030/api/department/updateDepartment/:id
+http://localhost:3030/api/department/deleteDepartment/:id
+http://localhost:3030/api/department/
 
 // Staff history
-http://localhost:3000/api/staffHistory/getStaffHistories
-http://localhost:3000/api/staffHistory/getStaffHistory/:id
-http://localhost:3000/api/staffHistory/addStaffHistory
-http://localhost:3000/api/staffHistory/updateStaffHistory/:id
-http://localhost:3000/api/staffHistory/deleteStaffHistory/:id
-http://localhost:3000/api/staffHistory/
-http://localhost:3000/api/staffHistory/
+http://localhost:3030/api/staffHistory/getStaffHistories
+http://localhost:3030/api/staffHistory/getStaffHistory/:id
+http://localhost:3030/api/staffHistory/addStaffHistory
+http://localhost:3030/api/staffHistory/updateStaffHistory/:id
+http://localhost:3030/api/staffHistory/deleteStaffHistory/:id
+http://localhost:3030/api/staffHistory/
+http://localhost:3030/api/staffHistory/
 
 // Treatment
-http://localhost:3000/api/treatment/getTreatments
-http://localhost:3000/api/treatment/getTreatment/:id
-http://localhost:3000/api/treatment/addTreatment
-http://localhost:3000/api/treatment/updateTreatment/:id
-http://localhost:3000/api/treatment/deleteTreatment/:id
-http://localhost:3000/api/treatment/
-http://localhost:3000/api/treatment/
+http://localhost:3030/api/treatment/getTreatments
+http://localhost:3030/api/treatment/getTreatment/:id
+http://localhost:3030/api/treatment/addTreatment
+http://localhost:3030/api/treatment/updateTreatment/:id
+http://localhost:3030/api/treatment/deleteTreatment/:id
+http://localhost:3030/api/treatment/
+http://localhost:3030/api/treatment/
 

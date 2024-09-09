@@ -48,6 +48,19 @@ router.post('/addTreatment', async (req, res) => {
   }
 })
 
+// Create a new treatment for a patient with associated staff
+router.post('/addTreatment/:patientID/:staffID', async (req, res) => {
+  try {
+    const treatment = await Treatment.create({
+      patientID: req.params.patientID,
+      staffID: req.params.staffID,
+    })
+    res.json(treatment)
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
 // Update a treatment
 router.put('/updateTreatment/:id', async (req, res) => {
   try {
