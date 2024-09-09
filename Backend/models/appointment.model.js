@@ -25,12 +25,16 @@ const Appointment = sequelize.define(
         key: 'staffID',
       },
     },
+    dayOfWeek: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     startTime: {
-      type: DataTypes.DATE,
+      type: DataTypes.TIME,
       allowNull: false,
     },
     endTime: {
-      type: DataTypes.DATE,
+      type: DataTypes.TIME,
       allowNull: false,
     },
   },

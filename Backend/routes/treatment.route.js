@@ -49,7 +49,7 @@ router.post('/addTreatment', async (req, res) => {
 })
 
 // Create a new treatment for a patient with associated staff
-router.post('/addTreatment/:patientID/:staffID', async (req, res) => {
+router.post('/addTreatment/:patientID&', async (req, res) => {
   try {
     const treatment = await Treatment.create({
       patientID: req.params.patientID,

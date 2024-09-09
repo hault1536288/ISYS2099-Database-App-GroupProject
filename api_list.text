@@ -24,14 +24,14 @@ http://localhost:3030/api/schedule/deleteSchedule/:id
 http://localhost:3030/api/schedule/getStaffBySchedule
 
 // Appoinment
-http://localhost:3030/api/appoinment/getAppointments
-http://localhost:3030/api/appoinment/getAppointment/:id
-http://localhost:3030/api/appoinment/addAppointment
-http://localhost:3030/api/appoinment/updateAppointment/:id
-http://localhost:3030/api/appoinment/deleteAppointment/:id
-http://localhost:3030/api/appoinment/
-http://localhost:3030/api/appoinment/
-http://localhost:3030/api/appoinment/
+http://localhost:3030/api/appointment/getAppointments
+http://localhost:3030/api/appointment/getAppointment/:id
+http://localhost:3030/api/appointment/addAppointment
+http://localhost:3030/api/appointment/updateAppointment/:id
+http://localhost:3030/api/appointment/deleteAppointment/:id
+http://localhost:3030/api/appointment/
+http://localhost:3030/api/appointment/
+http://localhost:3030/api/appointment/
 
 // Department
 http://localhost:3030/api/department/getDepartments

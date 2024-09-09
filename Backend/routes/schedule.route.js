@@ -33,7 +33,7 @@ router.get('/getSchedule/:id', async (req, res) => {
   }
 })
 
-// Get a staff's schedule based on staff's appointment availability
+// View working schedule of all doctors for a given duration (with busy or available status)
 router.get('/getStaffBySchedule', async (req, res) => {
   try {
     const staffAppointments = await Staff.findAll({
