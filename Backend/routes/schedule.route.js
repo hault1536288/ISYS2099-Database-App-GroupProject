@@ -67,7 +67,7 @@ router.put('/updateSchedule/:id', async (req, res) => {
     const schedule = await Schedule.findByPk(req.params.id)
     schedule.staffID = req.body.staffID
     schedule.departmentID = req.body.departmentID
-    schedule.day = req.body.day
+    schedule.dayOfWeek = req.body.dayOfWeek
     schedule.startTime = req.body.startTime
     schedule.endTime = req.body.endTime
     await schedule.save()
