@@ -51,7 +51,7 @@ router.post('/addSchedule', async (req, res) => {
     const schedule = await Schedule.create({
       staffID: req.body.staffID,
       departmentID: req.body.departmentID,
-      day: req.body.day,
+      dayOfWeek: req.body.dayOfWeek,
       startTime: req.body.startTime,
       endTime: req.body.endTime,
     })
