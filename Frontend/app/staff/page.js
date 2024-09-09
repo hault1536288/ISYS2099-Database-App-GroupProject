@@ -8,7 +8,16 @@ export default function StaffList() {
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [showSchedule, setShowSchedule] = useState(false);
-
+  const [addSchedule, setAddSchedule] = useState(false);
+  const [newStaff, setNewStaff] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    birthDate: "",
+    jobTitle: "",
+    salary: "",
+  });
 
   const staffs = [
     {
@@ -106,6 +115,26 @@ export default function StaffList() {
     },
   ];
 
+  const addStaff = async () => {
+    try {
+      const res = await fetch("/api/register-staff", {  // replace the apiUrl
+        // reaplce the apiUrl
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newStaff),
+      });
+
+      if (res.ok) {
+        setShowModal(false);
+        setNewStaff({ name: "", email: "", phone: "", address: "", birthDate: "", jobTitle: "", salary: "" });
+      }
+    } catch (error) {
+      console.error("Failed to register patient:", error);
+    }
+  };
+
   // if (loading) return <div>Loading...</div>;
   // if (error) return <p>Error: {error.message}</p>;
 
@@ -119,17 +148,13 @@ export default function StaffList() {
           placeholder="Filter by Name"
           className="border p-2 rounded"
         />
-        <select
-          className="border p-2 rounded"
-        >
+        <select className="border p-2 rounded">
           <option value="">All Departments</option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
         </select>
-        <select
-          className="border p-2 rounded"
-        >
+        <select className="border p-2 rounded">
           <option value="ASC">Ascending</option>
           <option value="DESC">Descending</option>
         </select>
@@ -158,7 +183,7 @@ export default function StaffList() {
           </tr>
         </thead>
         <tbody>
-          {staffs.length > 0 ? (         // replace 'staffs' with 'data' when there is apiUrl
+          {staffs.length > 0 ? ( // replace 'staffs' with 'data' when there is apiUrl
             staffs.map((staff) => (
               <tr key={staff.id}>
                 <td className="border px-4 py-2">{staff.id}</td>
@@ -178,10 +203,16 @@ export default function StaffList() {
                     Update
                   </button>
                   <button
-                    className="bg-orange-500 text-white p-2 rounded mb-4"
+                    className="bg-orange-500 text-white p-2 rounded mb-4 mr-2"
                     onClick={() => setShowSchedule(true)}
                   >
                     Schedule
+                  </button>
+                  <button
+                    className="bg-yellow-500 text-white p-2 rounded mb-4 mr-2"
+                    onClick={() => setAddSchedule(true)}
+                  >
+                    Add
                   </button>
                 </td>
               </tr>
@@ -206,42 +237,70 @@ export default function StaffList() {
                 type="text"
                 placeholder="Name"
                 className="border p-2 mb-2 w-full"
+                value={newStaff.name}
+                onChange={(e) =>
+                  setNewStaff({ ...newStaff, name: e.target.value })
+                }
               />
               <input
                 type="email"
                 placeholder="Email"
                 className="border p-2 mb-2 w-full"
+                value={newStaff.email}
+                onChange={(e) =>
+                  setNewStaff({ ...newStaff, email: e.target.value })
+                }
               />
               <input
                 type="tel"
                 placeholder="Phone Number"
                 className="border p-2 mb-2 w-full"
+                value={newStaff.phone}
+                onChange={(e) =>
+                  setNewStaff({ ...newStaff, phone: e.target.value })
+                }
               />
               <input
                 type="text"
                 placeholder="Address"
                 className="border p-2 mb-2 w-full"
+                value={newStaff.address}
+                onChange={(e) =>
+                  setNewStaff({ ...newStaff, address: e.target.value })
+                }
               />
               <input
                 type="date"
                 placeholder="Date of Birth"
                 className="border p-2 mb-2 w-full"
+                value={newStaff.birthDate}
+                onChange={(e) =>
+                  setNewStaff({ ...newStaff, birthDate: e.target.value })
+                }
               />
               <input
                 type="text"
                 placeholder="Job Title"
                 className="border p-2 mb-2 w-full"
+                value={newStaff.jobTitle}
+                onChange={(e) =>
+                  setNewStaff({ ...newStaff, jobTitle: e.target.value })
+                }
               />
               <input
                 type="text"
                 placeholder="Salary"
                 className="border p-2 mb-2 w-full"
+                value={newStaff.salary}
+                onChange={(e) =>
+                  setNewStaff({ ...newStaff, salary: e.target.value })
+                }
               />
 
               <div className="flex justify-between mt-4">
                 <button
                   className="bg-blue-500 text-white p-2 rounded"
-                  // onClick={registerStaff}
+                  onClick={addStaff}
                 >
                   Register
                 </button>
@@ -299,9 +358,9 @@ export default function StaffList() {
               />
 
               <div className="flex justify-between mt-4">
-                <button
-                  className="bg-blue-500 text-white p-2 rounded"
-                >
+                <button 
+                  type="submit"
+                  className="bg-blue-500 text-white p-2 rounded">
                   Update
                 </button>
                 <button
@@ -346,6 +405,48 @@ export default function StaffList() {
             >
               Close
             </button>
+          </div>
+        </div>
+      )}
+      {addSchedule && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
+          <div className="bg-white p-8 rounded-lg shadow-lg">
+            <h2 className="text-xl mb-4">New Schedule</h2>
+            <form>
+              <input
+                type="text"
+                placeholder="Day of Week"
+                className="border p-2 mb-2 w-full"
+              />
+              <label>Start Time</label>
+              <input
+                type="time"
+                placeholder="Start Time"
+                className="border p-2 mb-2 w-full"
+              />
+              <label>End Time</label>
+              <input
+                type="time"
+                placeholder="End Time"
+                className="border p-2 mb-2 w-full"
+              />
+
+              <div className="flex justify-between mt-4">
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white p-2 rounded"
+                >
+                  Add
+                </button>
+                <button
+                  type="reset"
+                  className="bg-red-500 text-white p-2 rounded"
+                  onClick={() => setAddSchedule(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

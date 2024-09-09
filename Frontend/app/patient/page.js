@@ -8,7 +8,14 @@ export default function PatientList() {
   // const { data, error, loading } = fetchData('apiUrl'); // replace with apiUrl
   const [showRegister, setShowRegister] = useState(false);
   const [showTreatment, setShowTreatment] = useState(false);
-  
+  const [newPatient, setNewPatient] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    birthDate: "",
+    allergy: "",
+  });
 
   const patient = [
     {
@@ -76,6 +83,25 @@ export default function PatientList() {
     },
   ];
 
+  const addPatient = async () => {
+    try {
+      const res = await fetch("/api/register-patient", {
+        // reaplce the apiUrl
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPatient),
+      });
+
+      if (res.ok) {
+        setShowModal(false);
+        setNewPatient({ name: "", email: "", phone: "", address: "", birthDate: "", allergy: "" });
+      }
+    } catch (error) {
+      console.error("Failed to register patient:", error);
+    }
+  };
 
   // if (loading) return <div>Loading...</div>;
   // if (error) return <p>Error: {error.message}</p>;
@@ -91,9 +117,7 @@ export default function PatientList() {
           className="border p-3 w-full"
           placeholder="Search by name or ID"
         />
-        <button
-          className="ml-2 bg-yellow-500 text-white p-2 rounded"
-        >
+        <button className="ml-2 bg-yellow-500 text-white p-2 rounded">
           Search
         </button>
       </div>
@@ -121,7 +145,7 @@ export default function PatientList() {
           </tr>
         </thead>
         <tbody>
-          {patient.length > 0 ? (       // replace 'patient' with 'data' when there is apiUrl
+          {patient.length > 0 ? ( // replace 'patient' with 'data' when there is apiUrl
             patient.map((patient) => (
               <tr key={patient.id}>
                 <td className="border px-4 py-2">{patient.id}</td>
@@ -161,37 +185,61 @@ export default function PatientList() {
                 type="text"
                 placeholder="Name"
                 className="border p-2 mb-2 w-full"
+                value={newPatient.name}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, name: e.target.value })
+                }
               />
               <input
                 type="email"
                 placeholder="Email"
                 className="border p-2 mb-2 w-full"
+                value={newPatient.email}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, email: e.target.value })
+                }
               />
               <input
                 type="tel"
                 placeholder="Phone Number"
                 className="border p-2 mb-2 w-full"
+                value={newPatient.phone}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, phone: e.target.value })
+                }
               />
               <input
                 type="text"
                 placeholder="Address"
                 className="border p-2 mb-2 w-full"
+                value={newPatient.address}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, address: e.target.value })
+                }
               />
               <input
                 type="date"
                 placeholder="Date of Birth"
                 className="border p-2 mb-2 w-full"
+                value={newPatient.birthDate}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, birthDate: e.target.value })
+                }
               />
               <input
                 type="text"
                 placeholder="Allergy"
                 className="border p-2 mb-2 w-full"
+                value={newPatient.allergy}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, allergy: e.target.value })
+                }
               />
 
               <div className="flex justify-between mt-4">
                 <button
                   className="bg-blue-500 text-white p-2 rounded"
-                  // onClick={registerPatient}
+                  onClick={addPatient}
                 >
                   Register
                 </button>
@@ -218,9 +266,7 @@ export default function PatientList() {
                 className="h-20 pl-2 text-left placeholder-top-left border rounded"
               />
               <div className="flex justify-between mt-4">
-                <button
-                  className="bg-blue-500 text-white p-2 rounded"
-                >
+                <button className="bg-blue-500 text-white p-2 rounded">
                   Add
                 </button>
                 <button
@@ -237,4 +283,4 @@ export default function PatientList() {
       )}
     </div>
   );
-};
+}
