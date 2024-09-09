@@ -62,6 +62,7 @@ router.post('/addStaff', async (req, res) => {
       phone: req.body.phone,
       address: req.body.address,
       birthDate: req.body.birthDate,
+      jobCategory: req.body.jobCategory,
       jobTitle: req.body.jobTitle,
       salary: req.body.salary,
     })
@@ -82,6 +83,7 @@ router.put('/updateStaff/:id', async (req, res) => {
     staff.phone = req.body.phone
     staff.address = req.body.address
     staff.birthDate = req.body.birthDate
+    staff.jobCategory = req.body.jobCategory
     staff.jobTitle = req.body.jobTitle
     staff.salary = req.body.salary
     await staff.save()

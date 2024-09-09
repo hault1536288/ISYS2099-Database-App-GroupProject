@@ -70,6 +70,10 @@ const Staff = sequelize.define('tb_staff', {
     type: DataTypes.DATE,
     allowNull: false,
   },
+  jobCategory: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+  },
   jobTitle: {
     type: DataTypes.STRING(255),
     allowNull: false,
