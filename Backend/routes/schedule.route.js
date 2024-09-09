@@ -33,6 +33,48 @@ router.get('/getSchedule/:id', async (req, res) => {
   }
 })
 
+// Get a staff's schedule based on staff's appointment availability
+router.get('/getStaffBySchedule', async (req, res) => {
+  try {
+    const staffAppointments = await Staff.findAll({
+      include: {
+        model: Appointment,
+        where: {
+          dayOfWeek: req.body.dayOfWeek,
+          startTime: req.body.startTime,
+          endTime: req.body.endTime,
+        },
+      },
+    })
+
+    const staffSchedules = await Staff.findAll({
+      include: {
+        model: Schedule,
+        where: {
+          dayOfWeek: req.body.dayOfWeek,
+          startTime: req.body.startTime,
+          endTime: req.body.endTime,
+        },
+      },
+    })
+
+    if (staffAppointments !== staffSchedules) {
+      const availableDoctor = await Schedule.findAll({
+        where: {
+          dayOfWeek: req.body.dayOfWeek,
+          startTime: req.body.startTime,
+          endTime: req.body.endTime,
+        },
+      })
+      res.json(availableDoctor)
+    }
+
+    res.json({ message: 'No available doctor' })
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
 // Get a schedule by staff
 router.get('/getScheduleByStaff/:staffID', async (req, res) => {
   try {
