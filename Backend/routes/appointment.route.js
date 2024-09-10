@@ -51,8 +51,7 @@ router.post('/addAppointment/:patientId/:staffId', async (req, res) => {
       endTime: req.body.endTime,
     })
 
-    res.json(appointment)
-    res.json(schedule)
+    res.json('Appointment created successfully')
   } catch (err) {
     res.json({ message: err })
   }

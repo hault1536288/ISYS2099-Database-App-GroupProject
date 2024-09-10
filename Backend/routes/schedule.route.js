@@ -3,6 +3,7 @@ const Schedule = require('../models/schedule.model')
 const sequelize = require('../config/mysql_database')
 const Staff = require('../models/staff.model')
 const Appointment = require('../models/appointment.model')
+const { where, Op } = require('sequelize')
 const router = express.Router()
 
 sequelize
@@ -41,17 +42,29 @@ router.get('/getSchedulesOfDoctors', async (req, res) => {
       req.body.endTime
     )
 
-    const scheduleOfDoctors = await Schedule.findAll()
+    const scheduleOfDoctors = await Schedule.findAll({
+      where: {
+        staffID: {
+          [Op.not]: null,
+        },
+      },
+    })
+
+    const gotDoctors = await Staff.findAll({
+      where: { jobCategory: 'Doctor' },
+    })
 
     const availableDoctors = []
 
     for (let i = 0; i < scheduleOfDoctors.length; i++) {
       if (inputDateTime !== scheduleOfDoctors) {
-        availableDoctors.push(scheduleOfDoctors[i])
+        availableDoctors.push(gotDoctors)
       }
       res.json(availableDoctors)
     }
-  } catch (err) {}
+  } catch (err) {
+    res.json({ message: err })
+  }
 })
 
 // Get a schedule by staff

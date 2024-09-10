@@ -6,6 +6,19 @@ http://localhost:3030/api/patient/addPatient
 http://localhost:3030/api/patient/updatePatient/:id
 http://localhost:3030/api/patient/deletePatient/:id
 
+// Body for testing patient API
+{
+  "patientID": 1,
+  "treatmentID": 1,
+  "appointmentID": 1,
+  "name": "John Doe",
+  "email": "johndoe@examle.com",
+  "phone": "1234567890",
+  "address": "123 Main St",
+  "birthDate": "1990-01-01",
+  "allergy": "None"
+}
+
 // Staff
 http://localhost:3030/api/staff/getStaffs
 http://localhost:3030/api/staff/getStaff/:id
@@ -13,6 +26,19 @@ http://localhost:3030/api/staff/getStaffByName/:name
 http://localhost:3030/api/staff/addStaff
 http://localhost:3030/api/staff/updateStaff/:id
 http://localhost:3030/api/staff/deleteStaff/:id
+
+// Body for testing staff API
+{
+  "groupManagerID": 1,
+  "name": "John Doe",
+  "email": "johndoe@gmail.com",
+  "phone": "1234567890",
+  "address": "123 Main St, Houston, TX 77001",
+  "birthDate": "1990-01-01",
+  "jobCategory": "Doctor",
+  "jobTitle": "General Practitioner",
+  "salary": 100000
+}
 
 // Schedule
 http://localhost:3030/api/schedule/getSchedules
