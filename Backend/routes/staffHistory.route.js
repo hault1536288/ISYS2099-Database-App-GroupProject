@@ -4,8 +4,6 @@ const sequelize = require('../config/mysql_database')
 const Staff = require('../models/staff.model')
 const router = express.Router()
 
-StaffHistory.belongsTo(Staff, { foreignKey: 'staffID' })
-
 sequelize
   .sync({ force: true })
   .then(() => {

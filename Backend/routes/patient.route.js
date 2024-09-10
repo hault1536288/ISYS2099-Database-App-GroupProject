@@ -5,11 +5,6 @@ const Appointment = require('../models/appointment.model')
 const Treatment = require('../models/treatment.model')
 const router = express.Router()
 
-Patient.hasMany(Appointment, { foreignKey: 'patientID' })
-Patient.hasMany(Treatment, { foreignKey: 'patientID' })
-Appointment.belongsTo(Patient, { foreignKey: 'patientID' })
-Treatment.belongsTo(Patient, { foreignKey: 'patientID' })
-
 sequelize
   .sync({ force: true })
   .then(() => {

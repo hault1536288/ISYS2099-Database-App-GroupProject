@@ -10,15 +10,8 @@ const Schedule = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    staffID: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Staff,
-        key: 'staffID',
-      },
-    },
-    dayOfWeek: {
-      type: DataTypes.STRING(255),
+    date: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
     startTime: {

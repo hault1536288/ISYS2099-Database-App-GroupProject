@@ -10,13 +10,6 @@ const Department = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    staffID: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Staff,
-        key: 'staffID',
-      },
-    },
     managerID: {
       type: DataTypes.INTEGER,
     },

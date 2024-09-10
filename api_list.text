@@ -21,7 +21,7 @@ http://localhost:3030/api/schedule/getScheduleByStaff/:staffID
 http://localhost:3030/api/schedule/addSchedule
 http://localhost:3030/api/schedule/updateSchedule/:id
 http://localhost:3030/api/schedule/deleteSchedule/:id
-http://localhost:3030/api/schedule/getStaffBySchedule
+http://localhost:3030/api/schedule/getSchedulesOfDoctors
 
 // Appoinment
 http://localhost:3030/api/appointment/getAppointments

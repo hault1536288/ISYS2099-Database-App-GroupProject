@@ -22,13 +22,13 @@ const scheduleRoutes = require('./routes/schedule.route')
 const staffHistoryRoutes = require('./routes/staffHistory.route')
 
 // Use the routes
+app.use('/api/patient', patientRoutes)
+app.use('/api/staff', staffRoutes)
 app.use('/api/staffHistory', staffHistoryRoutes)
 app.use('/api/schedule', scheduleRoutes)
 app.use('/api/appointment', appointmentRoutes)
 app.use('/api/treatment', treatmentRoutes)
 app.use('/api/department', departmentRoutes)
-app.use('/api/patient', patientRoutes)
-app.use('/api/staff', staffRoutes)
 
 // Listen to a specified port
 app.listen(3030, () => {

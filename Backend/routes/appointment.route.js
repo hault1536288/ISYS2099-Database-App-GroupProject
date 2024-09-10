@@ -4,10 +4,7 @@ const sequelize = require('../config/mysql_database')
 const router = express.Router()
 const Patient = require('../models/patient.model')
 const Staff = require('../models/staff.model')
-const { DataTypes } = require('sequelize')
-
-Appointment.belongsTo(Patient, { foreignKey: 'patientID' })
-Appointment.belongsTo(Staff, { foreignKey: 'staffID' })
+const Schedule = require('../models/schedule.model')
 
 sequelize
   .sync({ force: true })
@@ -37,16 +34,25 @@ router.get('/getAppointment/:id', async (req, res) => {
 })
 
 // Create a new appointment for a patient with associated staff
-router.post('/addAppointment', async (req, res) => {
+router.post('/addAppointment/:patientId/:staffId', async (req, res) => {
   try {
     const appointment = await Appointment.create({
-      patientID: req.body.patientID,
-      staffID: req.body.staffID,
-      dayOfWeek: req.body.dayOfWeek,
+      patientID: req.params.patientId,
+      staffID: req.params.staffId,
+      date: req.body.date,
       startTime: req.body.startTime,
       endTime: req.body.endTime,
     })
+
+    const schedule = await Schedule.create({
+      staffID: req.params.staffId,
+      date: req.body.date,
+      startTime: req.body.startTime,
+      endTime: req.body.endTime,
+    })
+
     res.json(appointment)
+    res.json(schedule)
   } catch (err) {
     res.json({ message: err })
   }

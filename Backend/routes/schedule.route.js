@@ -2,9 +2,8 @@ const express = require('express')
 const Schedule = require('../models/schedule.model')
 const sequelize = require('../config/mysql_database')
 const Staff = require('../models/staff.model')
+const Appointment = require('../models/appointment.model')
 const router = express.Router()
-
-Schedule.belongsTo(Staff, { foreignKey: 'staffID' })
 
 sequelize
   .sync({ force: true })
@@ -33,58 +32,26 @@ router.get('/getSchedule/:id', async (req, res) => {
   }
 })
 
-// View working schedule of all doctors for a given duration (with busy or available status)
-router.get('/getStaffBySchedule', async (req, res) => {
-  try {
-    const staffAppointments = await Staff.findAll({
-      include: {
-        model: Appointment,
-        where: {
-          dayOfWeek: req.body.dayOfWeek,
-          startTime: req.body.startTime,
-          endTime: req.body.endTime,
-        },
-      },
-    })
-
-    const staffSchedules = await Staff.findAll({
-      include: {
-        model: Schedule,
-        where: {
-          dayOfWeek: req.body.dayOfWeek,
-          startTime: req.body.startTime,
-          endTime: req.body.endTime,
-        },
-      },
-    })
-
-    if (staffAppointments !== staffSchedules) {
-      const availableDoctor = await Schedule.findAll({
-        where: {
-          dayOfWeek: req.body.dayOfWeek,
-          startTime: req.body.startTime,
-          endTime: req.body.endTime,
-        },
-      })
-      res.json(availableDoctor)
-    }
-
-    res.json({ message: 'No available doctor' })
-  } catch (err) {
-    res.json({ message: err })
-  }
-})
-
 // Get a schedule by staff
-router.get('/getScheduleByStaff/:staffID', async (req, res) => {
+router.get('/getSchedulesOfDoctors', async (req, res) => {
   try {
-    const schedule = await Schedule.findAll({
-      where: { staffID: req.params.staffID },
-    })
-    res.json(schedule)
-  } catch (err) {
-    res.json({ message: err })
-  }
+    const inputDateTime = new Date(
+      req.body.date,
+      req.body.startTime,
+      req.body.endTime
+    )
+
+    const scheduleOfDoctors = await Schedule.findAll()
+
+    const availableDoctors = []
+
+    for (let i = 0; i < scheduleOfDoctors.length; i++) {
+      if (inputDateTime !== scheduleOfDoctors) {
+        availableDoctors.push(scheduleOfDoctors[i])
+      }
+      res.json(availableDoctors)
+    }
+  } catch (err) {}
 })
 
 // Get a schedule by staff
@@ -95,7 +62,7 @@ router.post('/addSchedule', async (req, res) => {
     const schedule = await Schedule.create({
       staffID: req.body.staffID,
       departmentID: req.body.departmentID,
-      dayOfWeek: req.body.dayOfWeek,
+      date: req.body.date,
       startTime: req.body.startTime,
       endTime: req.body.endTime,
     })
