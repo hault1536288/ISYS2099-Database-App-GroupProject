@@ -3,81 +3,91 @@
 import React, { useState, useEffect } from "react";
 import "@/app/globals.css";
 import fetchData from "../hooks/fetchData";
-import Input from "../components/input";
 
 export default function PatientList() {
-  // const { data, error, loading } = fetchData('apiUrl'); // replace with apiUrl
+  const { data, error, loading } = fetchData(
+    // replace with apiUrl
+    "http://localhost:3030/api/patient/getPatients"
+  );
+  const [patient, setPatient] = useState([]);
+  const [load, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showTreatment, setShowTreatment] = useState(false);
+  const [newPatient, setNewPatient] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    birthDate: "",
+    allergy: "",
+  });
 
-  const patient = [
-    {
-      id: 1,
-      name: "John Smith",
-      email: "12345@example.com",
-      phone: "0123456789",
-      address: "702 Đ. Nguyễn Văn Linh, Tân Hưng, Quận 7, Hồ Chí Minh 700000",
-      birthDate: "2024-09-06",
-      allergy: "shrimp",
-    },
-    {
-      id: 2,
-      name: "Franklin Wong",
-      email: "12345@example.com",
-      phone: "0123456789",
-      address: "702 Đ. Nguyễn Văn Linh, Tân Hưng, Quận 7, Hồ Chí Minh 700000",
-      birthDate: "2024-09-06",
-      allergy: "shrimp",
-    },
-    {
-      id: 3,
-      name: "Alicia Zelaya",
-      email: "12345@example.com",
-      phone: "0123456789",
-      address: "702 Đ. Nguyễn Văn Linh, Tân Hưng, Quận 7, Hồ Chí Minh 700000",
-      birthDate: "2024-09-06",
-      allergy: "shrimp",
-    },
-    {
-      id: 4,
-      name: "Jennifer Wallace",
-      email: "12345@example.com",
-      phone: "0123456789",
-      address: "702 Đ. Nguyễn Văn Linh, Tân Hưng, Quận 7, Hồ Chí Minh 700000",
-      birthDate: "2024-09-06",
-      allergy: "shrimp",
-    },
-    {
-      id: 5,
-      name: "Ramesh Narayan",
-      email: "12345@example.com",
-      phone: "0123456789",
-      address: "702 Đ. Nguyễn Văn Linh, Tân Hưng, Quận 7, Hồ Chí Minh 700000",
-      birthDate: "2024-09-06",
-      allergy: "shrimp",
-    },
-    {
-      id: 6,
-      name: "Joyce English",
-      email: "12345@example.com",
-      phone: "0123456789",
-      address: "702 Đ. Nguyễn Văn Linh, Tân Hưng, Quận 7, Hồ Chí Minh 700000",
-      birthDate: "2024-09-06",
-      allergy: "shrimp",
-    },
-    {
-      id: 7,
-      name: "Ahmad Jabbar",
-      email: "12345@example.com",
-      phone: "0123456789",
-      address: "702 Đ. Nguyễn Văn Linh, Tân Hưng, Quận 7, Hồ Chí Minh 700000",
-      birthDate: "2024-09-06",
-      allergy: "shrimp",
-    },
-  ];
+  useEffect(() => {
+    if (data) {
+      setPatient(data);
+    }
+  }, [data]);
 
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <p>Error: {error.message}</p>;
+  useEffect(() => {
+    // Fetch patient data based on search input
+    if (search.trim()) {
+      handleSearch(search);
+    } else {
+      // If search is empty, set patient to initial data
+      if (data) {
+        setPatient(data);
+      }
+    }
+  }, [search]);
+
+  const addPatient = async () => {
+    try {
+      const res = await fetch("http://localhost:3030/api/patient/addPatient", {
+        // replace the apiUrl
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPatient),
+      });
+
+      if (res.ok) {
+        setShowRegister(false);
+        setNewPatient({
+          name: "",
+          email: "",
+          phone: "",
+          address: "",
+          birthDate: "",
+          allergy: "",
+        });
+      }
+    } catch (error) {
+      console.error("Failed to register patient:", error);
+    }
+  };
+
+  const handleSearch = async (search = "") => {
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `http://localhost:3030/api/patient/getPatient/${search}`
+      );
+      const data = await res.json();
+      console.log(data);
+      setPatient(data || []);
+      setLoading(false);
+      setSearchResult(true);
+    } catch (error) {
+      console.error("Failed to fetch patients:", error);
+      setLoading(false);
+    }
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className="container mx-auto p-4">
@@ -89,8 +99,13 @@ export default function PatientList() {
           type="text"
           className="border p-3 w-full"
           placeholder="Search by name or ID"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
-        <button className="ml-2 bg-yellow-500 text-white p-2 rounded">
+        <button
+          className="ml-2 bg-yellow-500 text-white p-2 rounded"
+          onClick={() => handleSearch(search)}
+        >
           Search
         </button>
       </div>
@@ -120,8 +135,8 @@ export default function PatientList() {
         <tbody>
           {patient.length > 0 ? ( // replace 'patient' with 'data' when there is apiUrl
             patient.map((patient) => (
-              <tr key={patient.id}>
-                <td className="border px-4 py-2">{patient.id}</td>
+              <tr key={patient.patientID}>
+                <td className="border px-4 py-2">{patient.patientID}</td>
                 <td className="border px-4 py-2">{patient.name}</td>
                 <td className="border px-4 py-2">{patient.email}</td>
                 <td className="border px-4 py-2">{patient.phone}</td>
@@ -158,37 +173,61 @@ export default function PatientList() {
                 type="text"
                 placeholder="Name"
                 className="border p-2 mb-2 w-full"
+                value={newPatient.name}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, name: e.target.value })
+                }
               />
               <input
                 type="email"
                 placeholder="Email"
                 className="border p-2 mb-2 w-full"
+                value={newPatient.email}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, email: e.target.value })
+                }
               />
               <input
                 type="tel"
                 placeholder="Phone Number"
                 className="border p-2 mb-2 w-full"
+                value={newPatient.phone}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, phone: e.target.value })
+                }
               />
               <input
                 type="text"
                 placeholder="Address"
                 className="border p-2 mb-2 w-full"
+                value={newPatient.address}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, address: e.target.value })
+                }
               />
               <input
                 type="date"
                 placeholder="Date of Birth"
                 className="border p-2 mb-2 w-full"
+                value={newPatient.birthDate}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, birthDate: e.target.value })
+                }
               />
               <input
                 type="text"
                 placeholder="Allergy"
                 className="border p-2 mb-2 w-full"
+                value={newPatient.allergy}
+                onChange={(e) =>
+                  setNewPatient({ ...newPatient, allergy: e.target.value })
+                }
               />
 
               <div className="flex justify-between mt-4">
                 <button
                   className="bg-blue-500 text-white p-2 rounded"
-                  // onClick={registerPatient}
+                  onClick={addPatient}
                 >
                   Register
                 </button>
