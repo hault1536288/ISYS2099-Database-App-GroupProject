@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../config/mysql_database')
-const Treatment = require('./treatment.model')
 const Appointment = require('./appointment.model')
+const Treatment = require('./treatment.model')
 
 const Patient = sequelize.define(
   'tb_patient',
@@ -10,20 +10,6 @@ const Patient = sequelize.define(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-    },
-    treatmentID: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Treatment,
-        key: 'treatmentID',
-      },
-    },
-    appoinmentID: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Appointment,
-        key: 'treatmentID',
-      },
     },
     name: {
       type: DataTypes.STRING,
@@ -54,4 +40,19 @@ const Patient = sequelize.define(
   { freezeTableName: true, timestamps: true }
 )
 
+Patient.hasMany(Appointment, { foreignKey: 'patientID' })
+Patient.hasMany(Treatment, { foreignKey: 'patientID' })
+
 module.exports = Patient
+
+// {
+//   "patientID": 1,
+//   "treatmentID": 1,
+//   "appointmentID": 1,
+//   "name": "John Doe",
+//   "email": "johndoe@example.com",
+//   "phone": "1234567890",
+//   "address": "123 Main St",
+//   "birthDate": "1990-01-01",
+//   "allergy": "None"
+// };

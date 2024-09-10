@@ -1,12 +1,7 @@
 const express = require('express')
 const Treatment = require('../models/treatment.model')
 const sequelize = require('../config/mysql_database')
-const Patient = require('../models/patient.model')
-const Staff = require('../models/staff.model')
 const router = express.Router()
-
-Treatment.belongsTo(Patient, { foreignKey: 'patientID' })
-Treatment.belongsTo(Staff, { foreignKey: 'staffID' })
 
 sequelize
   .sync({ force: true })
@@ -41,6 +36,19 @@ router.post('/addTreatment', async (req, res) => {
     const treatment = await Treatment.create({
       patientID: req.body.patientID,
       staffID: req.body.staffID,
+    })
+    res.json(treatment)
+  } catch (err) {
+    res.json({ message: err })
+  }
+})
+
+// Create a new treatment for a patient with associated staff
+router.post('/addTreatment/:patientID&', async (req, res) => {
+  try {
+    const treatment = await Treatment.create({
+      patientID: req.params.patientID,
+      staffID: req.params.staffID,
     })
     res.json(treatment)
   } catch (err) {

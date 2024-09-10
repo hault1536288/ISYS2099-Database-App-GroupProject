@@ -2,9 +2,9 @@ const express = require('express')
 const Schedule = require('../models/schedule.model')
 const sequelize = require('../config/mysql_database')
 const Staff = require('../models/staff.model')
+const Appointment = require('../models/appointment.model')
+const { where, Op } = require('sequelize')
 const router = express.Router()
-
-Schedule.belongsTo(Staff, { foreignKey: 'staffID' })
 
 sequelize
   .sync({ force: true })
@@ -34,16 +34,40 @@ router.get('/getSchedule/:id', async (req, res) => {
 })
 
 // Get a schedule by staff
-router.get('/getScheduleByStaff/:staffID', async (req, res) => {
+router.get('/getSchedulesOfDoctors', async (req, res) => {
   try {
-    const schedule = await Schedule.findAll({
-      where: { staffID: req.params.staffID },
+    const inputDateTime = new Date(
+      req.body.date,
+      req.body.startTime,
+      req.body.endTime
+    )
+
+    const scheduleOfDoctors = await Schedule.findAll({
+      where: {
+        staffID: {
+          [Op.not]: null,
+        },
+      },
     })
-    res.json(schedule)
+
+    const gotDoctors = await Staff.findAll({
+      where: { jobCategory: 'Doctor' },
+    })
+
+    const availableDoctors = []
+
+    for (let i = 0; i < scheduleOfDoctors.length; i++) {
+      if (inputDateTime !== scheduleOfDoctors) {
+        availableDoctors.push(gotDoctors)
+      }
+      res.json(availableDoctors)
+    }
   } catch (err) {
     res.json({ message: err })
   }
 })
+
+// Get a schedule by staff
 
 // Create a new schedule
 router.post('/addSchedule', async (req, res) => {
@@ -51,7 +75,7 @@ router.post('/addSchedule', async (req, res) => {
     const schedule = await Schedule.create({
       staffID: req.body.staffID,
       departmentID: req.body.departmentID,
-      dayOfWeek: req.body.dayOfWeek,
+      date: req.body.date,
       startTime: req.body.startTime,
       endTime: req.body.endTime,
     })

@@ -4,9 +4,7 @@ const sequelize = require('../config/mysql_database')
 const router = express.Router()
 const Patient = require('../models/patient.model')
 const Staff = require('../models/staff.model')
-
-Appointment.belongsTo(Patient, { foreignKey: 'patientID' })
-Appointment.belongsTo(Staff, { foreignKey: 'staffID' })
+const Schedule = require('../models/schedule.model')
 
 sequelize
   .sync({ force: true })
@@ -35,20 +33,31 @@ router.get('/getAppointment/:id', async (req, res) => {
   }
 })
 
-// Create a new appointment
-router.post('/addAppointment', async (req, res) => {
+// Create a new appointment for a patient with associated staff
+router.post('/addAppointment/:patientId/:staffId', async (req, res) => {
   try {
     const appointment = await Appointment.create({
-      patientID: req.body.patientID,
-      staffID: req.body.staffID,
+      patientID: req.params.patientId,
+      staffID: req.params.staffId,
+      date: req.body.date,
       startTime: req.body.startTime,
       endTime: req.body.endTime,
     })
-    res.json(appointment)
+
+    const schedule = await Schedule.create({
+      staffID: req.params.staffId,
+      date: req.body.date,
+      startTime: req.body.startTime,
+      endTime: req.body.endTime,
+    })
+
+    res.json('Appointment created successfully')
   } catch (err) {
     res.json({ message: err })
   }
 })
+
+// Book an appointment with a
 
 // Update an appointment
 router.put('/updateAppointment/:id', async (req, res) => {
@@ -56,6 +65,7 @@ router.put('/updateAppointment/:id', async (req, res) => {
     const appointment = await Appointment.findByPk(req.params.id)
     appointment.patientID = req.body.patientID
     appointment.staffID = req.body.staffID
+    appointment.dayOfWeek = req.body.dayOfWeek
     appointment.startTime = req.body.startTime
     appointment.endTime = req.body.endTime
     await appointment.save()

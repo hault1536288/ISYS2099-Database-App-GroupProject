@@ -1,7 +1,5 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../config/mysql_database')
-const Patient = require('./patient.model')
-const Staff = require('./staff.model')
 
 const Appointment = sequelize.define(
   'tb_appointment',
@@ -11,26 +9,16 @@ const Appointment = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    patientID: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Patient,
-        key: 'patientID',
-      },
-    },
-    staffID: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Staff,
-        key: 'staffID',
-      },
-    },
-    startTime: {
+    date: {
       type: DataTypes.DATE,
       allowNull: false,
     },
+    startTime: {
+      type: DataTypes.TIME,
+      allowNull: false,
+    },
     endTime: {
-      type: DataTypes.DATE,
+      type: DataTypes.TIME,
       allowNull: false,
     },
   },
@@ -38,3 +26,10 @@ const Appointment = sequelize.define(
 )
 
 module.exports = Appointment
+
+// {
+//
+//   "date": "Monday",
+//   "startTime": "09:00:00",
+//   "endTime": "10:00:00"
+// }

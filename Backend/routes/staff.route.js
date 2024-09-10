@@ -3,16 +3,10 @@ const Staff = require('../models/staff.model')
 const sequelize = require('../config/mysql_database')
 const Appointment = require('../models/appointment.model')
 const Treatment = require('../models/treatment.model')
-const Department = require('../models/department.model')
 const StaffHistory = require('../models/staffHistory.model')
 const Schedule = require('../models/schedule.model')
+const Department = require('../models/department.model')
 const router = express.Router()
-
-Staff.hasOne(Appointment, { foreignKey: 'staffID' })
-Staff.hasOne(Treatment, { foreignKey: 'staffID' })
-Staff.hasOne(Department, { foreignKey: 'staffID' })
-Staff.hasOne(StaffHistory, { foreignKey: 'staffID' })
-Staff.hasOne(Schedule, { foreignKey: 'staffID' })
 
 sequelize
   .sync({ force: true })
@@ -55,7 +49,6 @@ router.get('/getStaffByName/:name', async (req, res) => {
 router.post('/addStaff', async (req, res) => {
   try {
     const staff = await Staff.create({
-      departmentID: req.body.departmentID,
       groupManagerID: req.body.groupManagerID,
       name: req.body.name,
       email: req.body.email,

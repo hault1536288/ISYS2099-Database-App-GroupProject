@@ -14,41 +14,6 @@ const Staff = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    departmentID: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Department,
-        key: 'departmentID',
-      },
-    },
-    appoinmentID: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Appointment,
-        key: 'appointmentID',
-      },
-    },
-    treatmentID: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Treatment,
-        key: 'treatmentID',
-      },
-    },
-    scheduleID: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Schedule,
-        key: 'scheduleID',
-      },
-    },
-    historyID: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: StaffHistory,
-        key: 'historyID',
-      },
-    },
     groupManagerID: {
       type: DataTypes.INTEGER,
     },
@@ -88,4 +53,23 @@ const Staff = sequelize.define(
   { freezeTableName: true, timestamps: true }
 )
 
+Staff.hasMany(Appointment, { foreignKey: 'staffID' })
+Staff.hasMany(Schedule, { foreignKey: 'staffID' })
+Staff.hasMany(StaffHistory, { foreignKey: 'staffID' })
+Staff.hasOne(Department, { foreignKey: 'staffID' })
+Staff.hasMany(Treatment, { foreignKey: 'staffID' })
+Department.hasOne(Staff, { foreignKey: 'departmentID' })
+
 module.exports = Staff
+
+// {
+//   "groupManagerID": 1,
+//   "name": "John Doe",
+//   "email": "johndoe@gmail.com",
+//   "phone": "1234567890",
+//   "address": "123 Main St, Houston, TX 77001",
+//   "birthDate": "1990-01-01",
+//   "jobCategory": "Doctor",
+//   "jobTitle": "General Practitioner",
+//   "salary": 100000
+// }
